@@ -1,48 +1,21 @@
-// Swap these for your own projects. `color` accepts any of the CSS
-// variables defined in src/index.css (--blue, --orange, --ink) or a
-// literal hex value.
+// Automatically imports ALL images inside src/assets/images/
+// Simply drop any image (.jpg, .jpeg, .png, .webp, .gif, .svg) into src/assets/images/
+// and it will instantly appear in the website's grid section!
 
-export const projects = [
-  {
-    id: 1,
-    index: '01',
-    title: 'Project Alpha',
-    meta: 'Brand Identity — 2026',
-    color: 'var(--blue)',
-  },
-  {
-    id: 2,
-    index: '02',
-    title: 'Neon Market',
-    meta: 'E-commerce UI — 2026',
-    color: 'var(--orange)',
-  },
-  {
-    id: 3,
-    index: '03',
-    title: 'Riot / Calm',
-    meta: 'Poster Series — 2025',
-    color: 'var(--ink)',
-  },
-  {
-    id: 4,
-    index: '04',
-    title: 'FestAlchemy',
-    meta: 'Product Design & Prototyping — 2025',
-    color: 'var(--blue)',
-  },
-  {
-    id: 5,
-    index: '05',
-    title: 'Concrete Type',
-    meta: 'Typeface Study — 2025',
-    color: 'var(--orange)',
-  },
-  {
-    id: 6,
-    index: '06',
-    title: 'Loudspeaker',
-    meta: 'Album Art — 2024',
-    color: 'var(--ink)',
-  },
-];
+const globModules = import.meta.glob('../assets/images/*.{jpg,jpeg,png,webp,gif,svg,JPG,JPEG,PNG,WEBP,GIF,SVG}', {
+  eager: true,
+  import: 'default',
+});
+
+const colors = ['var(--blue)', 'var(--orange)', 'var(--ink)'];
+
+export const projects = Object.entries(globModules).map(([path, url], index) => {
+  const filename = path.split('/').pop().replace(/\.[^/.]+$/, '');
+  return {
+    id: index + 1,
+    index: String(index + 1).padStart(2, '0'),
+    title: filename,
+    color: colors[index % colors.length],
+    image: url,
+  };
+});

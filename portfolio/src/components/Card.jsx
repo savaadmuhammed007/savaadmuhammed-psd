@@ -7,13 +7,14 @@ export default function Card({ project }) {
   return (
     <article
       ref={ref}
-      className={`${s.card} ${visible ? s.visible : ''}`}
+      className={`${s.gridItem} ${visible ? s.visible : ''}`}
       style={{ '--card-color': project.color }}
     >
-      <span className={s.index}>{project.index}</span>
-      <div className={s.block} />
-      <h3 className={s.cardTitle}>{project.title}</h3>
-      <p className={s.cardMeta}>{project.meta}</p>
+      {project.image ? (
+        <img src={project.image} alt={project.title || 'Creative artwork'} className={s.image} loading="lazy" />
+      ) : (
+        <div className={s.placeholderBlock} />
+      )}
     </article>
   );
 }

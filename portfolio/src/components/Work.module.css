@@ -42,67 +42,47 @@
   gap: var(--sp-3);
 }
 
-.card {
+.gridItem {
   position: relative;
+  overflow: hidden;
   border: var(--bw) solid var(--ink);
-  background: var(--paper);
-  padding: var(--sp-2);
+  background: var(--paper-2);
   box-shadow: 6px 6px 0 var(--ink);
-  transition: transform 0.18s var(--ease-snap), box-shadow 0.18s var(--ease-snap),
-    background 0.18s var(--ease-snap), color 0.18s var(--ease-snap), opacity 0.5s var(--ease-snap);
+  aspect-ratio: 4 / 5;
+  transition: transform 0.25s var(--ease-snap), box-shadow 0.25s var(--ease-snap), opacity 0.5s var(--ease-snap);
 
   opacity: 0;
   transform: translateY(18px);
 }
 
-.card.visible {
+.gridItem.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.card:hover {
+.gridItem:hover {
   transform: translate(-4px, -4px);
   box-shadow: 10px 10px 0 var(--card-color, var(--ink));
-  background: var(--ink);
-  color: var(--paper);
 }
 
-.index {
-  position: absolute;
-  top: var(--sp-2);
-  right: var(--sp-2);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--grey);
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(100%);
+  transition: transform 0.35s var(--ease-snap), filter 0.4s ease;
 }
 
-.card:hover .index {
-  color: var(--paper);
+.gridItem:hover .image {
+  transform: scale(1.05);
+  filter: grayscale(0%);
 }
 
-.block {
-  aspect-ratio: 4 / 3;
+.placeholderBlock {
+  width: 100%;
+  height: 100%;
   background: var(--card-color, var(--blue));
-  border: var(--bw) solid var(--ink);
-  margin-bottom: var(--sp-2);
-}
-
-.cardTitle {
-  font-family: var(--font-display);
-  font-size: 19px;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.cardMeta {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--grey);
-}
-
-.card:hover .cardMeta {
-  color: var(--paper-2);
 }
 
 @media (max-width: 760px) {
