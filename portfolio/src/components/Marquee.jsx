@@ -1,6 +1,15 @@
 import s from './Marquee.module.css';
 
-const ITEMS = ['Adobe Photoshop', 'Adobe Illustrator', 'Adobe InDesign', 'Print Design', 'Social Media Designs', 'Poster Design', 'layout Design', 'Web Development'];
+const ITEMS = [
+  'Adobe Photoshop',
+  'Adobe Illustrator',
+  'Adobe InDesign',
+  'Print Design',
+  'Social Media Design',
+  'Poster Design',
+  'Layout Design',
+  'Web Development',
+];
 // duplicated so the CSS loop (-50%) is seamless
 const TRACK = [...ITEMS, ...ITEMS];
 

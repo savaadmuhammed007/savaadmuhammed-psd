@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
 import s from './Contact.module.css';
 
-const SOCIALS = ['Instagram', 'Behance', 'Dribbble', 'LinkedIn'];
+const SOCIALS = [
+  { name: 'Instagram', href: 'https://www.instagram.com/savaadmuhammed.psd/' },
+  { name: 'Behance', href: 'https://www.behance.net/savaadmuhammed' },
+  { name: 'Pinterest', href: 'https://in.pinterest.com/savaadmuhammed_/' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/muhammedsavaadvp/' },
+];
 
-// Contact form submission logic
 export default function Contact() {
   const [ref, visible] = useReveal();
   const [status, setStatus] = useState({ state: 'idle', message: '' });
@@ -18,7 +22,7 @@ export default function Contact() {
       return;
     }
 
-    setStatus({ state: 'sending', message: 'Sending…' });
+    setStatus({ state: 'sending', message: 'Sending...' });
 
     try {
       // const res = await fetch('/api/contact/', {
@@ -30,7 +34,7 @@ export default function Contact() {
 
       await new Promise((resolve) => setTimeout(resolve, 500)); // fake latency
 
-      setStatus({ state: 'ok', message: "Message received — I'll get back to you soon." });
+      setStatus({ state: 'ok', message: "Message received - I'll get back to you soon." });
       e.target.reset();
     } catch {
       setStatus({ state: 'err', message: 'Something went wrong. Try emailing directly instead.' });
@@ -40,9 +44,10 @@ export default function Contact() {
   return (
     <section ref={ref} className={`${s.section} ${visible ? s.visible : ''}`} id="contact">
       <div className={s.head}>
-        <h2>Let&rsquo;s talk</h2>
+        <h2>Let&rsquo;s work</h2>
         <p className={s.note}>
-          Have a project, a brand, or an idea half-sketched on paper? Send it over.
+          Need a poster, brand visual, social media creative, or website interface? Send
+          the details and I&rsquo;ll help shape it into something clear and memorable.
         </p>
       </div>
 
@@ -66,12 +71,13 @@ export default function Contact() {
           </label>
 
           <button type="submit" className={s.btn} disabled={status.state === 'sending'}>
-            Send message →
+            Send message &rarr;
           </button>
 
           <p
-            className={`${s.status} ${status.state === 'ok' ? s.ok : ''} ${status.state === 'err' ? s.errText : ''
-              }`}
+            className={`${s.status} ${status.state === 'ok' ? s.ok : ''} ${
+              status.state === 'err' ? s.errText : ''
+            }`}
             role="status"
             aria-live="polite"
           >
@@ -81,9 +87,9 @@ export default function Contact() {
 
         <div className={s.socials}>
           <span className={s.socialsLabel}>Find me</span>
-          {SOCIALS.map((name) => (
-            <a key={name} href="#" target="_blank" rel="noopener noreferrer">
-              {name} ↗
+          {SOCIALS.map((social) => (
+            <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer">
+              {social.name};
             </a>
           ))}
         </div>

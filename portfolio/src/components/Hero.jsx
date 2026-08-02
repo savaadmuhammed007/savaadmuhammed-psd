@@ -26,7 +26,7 @@ export default function Hero() {
   return (
     <section className={s.hero} id="top">
       <div className={s.inner}>
-        <p className={s.eyebrow}>GRAPHIC DESIGN — UI/UX & BRANDING — BASED IN INDIA</p>
+        <p className={s.eyebrow}>GRAPHIC DESIGN / UI DESIGN / BRAND IDENTITY / INDIA</p>
 
         <h1 className={s.title}>
           {/* Line 1 */}
@@ -54,9 +54,9 @@ export default function Hero() {
 
         <div className={s.meta}>
           <p className={s.sub}>
-            I&rsquo;m Savaad — a graphic designer and visual artist. I craft brand
-            identities, digital interfaces, typography, and motion graphics, from concept
-            to polished visual execution using modern design tools.
+            I&rsquo;m Muhammed Savaad, a graphic designer focused on bold brand visuals,
+            clean digital interfaces, social media creatives, posters, and layout systems
+            that communicate clearly and leave a strong impression.
           </p>
 
           <a href="#work" className={s.stamp}>
@@ -69,11 +69,11 @@ export default function Hero() {
                 fontWeight="700"
               >
                 <textPath href="#stampCircle" startOffset="0%">
-                  AVAILABLE FOR WORK • SCROLL TO VIEW •{' '}
+                  AVAILABLE FOR WORK / SCROLL TO VIEW /{' '}
                 </textPath>
               </text>
             </svg>
-            <span className={s.center}>↓</span>
+            <span className={s.center}>&darr;</span>
           </a>
         </div>
       </div>

@@ -26,11 +26,13 @@ export default function About() {
       <div className={s.copy}>
         <h2>About</h2>
         <p>
-          I specialize in creating bold visual identities, intuitive UI/UX designs, and striking typography systems.
-          My focus is on bringing creative ideas to life using industry-standard design tools like Figma, Illustrator, Photoshop, and After Effects.
+          I create visual designs that feel sharp, modern, and easy to understand. My work
+          brings together brand identity, UI layouts, posters, social media creatives, and
+          typography-led compositions for digital and print use.
         </p>
         <p>
-          Crafting digital interfaces, brand identity systems, poster graphics, and motion visuals that stand out with clarity, contrast, and high hierarchy.
+          I like building designs with strong hierarchy, balanced spacing, clean contrast,
+          and a clear purpose, so every piece looks good and communicates the right message.
         </p>
 
         <ul className={s.tags}>

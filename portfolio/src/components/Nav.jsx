@@ -35,7 +35,7 @@ export default function Nav() {
             </a>
           ))}
           <a href="#contact" className={s.cta} onClick={() => setOpen(false)}>
-            Contact ↗
+            Contact
           </a>
         </nav>
       </div>
