@@ -2,7 +2,7 @@
   "name": "design-portfolio-root",
   "private": true,
   "scripts": {
-    "build": "npm --prefix portfolio run build",
-    "dev": "npm --prefix portfolio run dev"
+    "build": "cd portfolio && npm run build",
+    "dev": "cd portfolio && npm run dev"
   }
 }

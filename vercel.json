@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm --prefix portfolio run build",
+  "buildCommand": "cd portfolio && npm run build",
   "outputDirectory": "portfolio/dist",
   "framework": "vite",
   "rewrites": [
