@@ -1,0 +1,118 @@
+.section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--sp-6) var(--sp-3);
+  border-bottom: var(--bw) solid var(--ink);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s var(--ease-snap), transform 0.5s var(--ease-snap);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-5);
+}
+
+.head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  text-transform: uppercase;
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--grey);
+  max-width: 34ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.card {
+  position: relative;
+  border: var(--bw) solid var(--ink);
+  background: var(--paper);
+  padding: var(--sp-2);
+  box-shadow: 6px 6px 0 var(--ink);
+  transition: transform 0.18s var(--ease-snap), box-shadow 0.18s var(--ease-snap),
+    background 0.18s var(--ease-snap), color 0.18s var(--ease-snap), opacity 0.5s var(--ease-snap);
+
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 var(--card-color, var(--ink));
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.index {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey);
+}
+
+.card:hover .index {
+  color: var(--paper);
+}
+
+.block {
+  aspect-ratio: 4 / 3;
+  background: var(--card-color, var(--blue));
+  border: var(--bw) solid var(--ink);
+  margin-bottom: var(--sp-2);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 19px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.cardMeta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--grey);
+}
+
+.card:hover .cardMeta {
+  color: var(--paper-2);
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
