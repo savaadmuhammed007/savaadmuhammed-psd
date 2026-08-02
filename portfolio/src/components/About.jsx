@@ -2,14 +2,10 @@ import { useReveal } from '../hooks/useReveal';
 import s from './About.module.css';
 
 const TAGS = [
-  'Figma',
   'Adobe Illustrator',
   'Adobe Photoshop',
   'Adobe InDesign',
   'After Effects',
-  'Adobe XD',
-  'Blender',
-  'Canva',
   'Typography',
   'Design Systems',
 ];

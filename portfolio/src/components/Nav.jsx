@@ -4,6 +4,7 @@ import s from './Nav.module.css';
 const LINKS = [
   { href: '#work', label: 'Work' },
   { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
 ];
 
 export default function Nav() {

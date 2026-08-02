@@ -26,7 +26,7 @@ export default function Hero() {
   return (
     <section className={s.hero} id="top">
       <div className={s.inner}>
-        <p className={s.eyebrow}>GRAPHIC DESIGN / UI DESIGN / BRAND IDENTITY / INDIA</p>
+        <p className={s.eyebrow}>GRAPHIC DESIGN</p>
 
         <h1 className={s.title}>
           {/* Line 1 */}
