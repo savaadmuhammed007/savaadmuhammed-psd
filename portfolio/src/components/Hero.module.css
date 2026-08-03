@@ -1,12 +1,15 @@
 .hero {
   border-bottom: var(--bw) solid var(--ink);
   padding: var(--sp-6) var(--sp-3) var(--sp-5);
+  overflow: hidden;
 }
 
 .inner {
   max-width: var(--max-w);
   margin: 0 auto;
 }
+
+/* ── Eyebrow ─────────────────────────────────────────────────────────── */
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -15,7 +18,17 @@
   letter-spacing: 0.12em;
   color: var(--grey);
   margin-bottom: var(--sp-3);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s ease, transform 0.6s var(--ease-snap);
 }
+
+.eyebrow.entered {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Title ───────────────────────────────────────────────────────────── */
 
 .title {
   font-family: var(--font-display);
@@ -23,42 +36,109 @@
   line-height: 0.98;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  cursor: default;
-  user-select: none;
 }
 
+/* Each line slides up and fades in with staggered delay */
 .line {
   display: block;
+  opacity: 0;
+  transform: translateY(100%) skewY(4deg);
+  transition: opacity 0.7s ease, transform 0.7s var(--ease-snap);
 }
 
-/* Each letter is its own inline-block so transforms work independently */
-.letter {
-  display: inline-block;
-  will-change: transform;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease;
+.title.entered .line {
+  opacity: 1;
+  transform: none;
 }
+
+.line1 {
+  transition-delay: 0.1s;
+}
+
+.line2 {
+  transition-delay: 0.25s;
+}
+
+.line3 {
+  transition-delay: 0.4s;
+}
+
+/* Continuous subtle glitch on riso pseudo-layers */
+.title.entered .line::before {
+  animation: risoShift 4s ease-in-out infinite alternate;
+}
+
+.title.entered .line::after {
+  animation: risoShift 4s ease-in-out 0.5s infinite alternate-reverse;
+}
+
+@keyframes risoShift {
+  0% {
+    transform: translate(1.5px, 1px);
+  }
+  25% {
+    transform: translate(-1px, 2px);
+  }
+  50% {
+    transform: translate(2px, -1px);
+  }
+  75% {
+    transform: translate(-1.5px, -0.5px);
+  }
+  100% {
+    transform: translate(1px, 1.5px);
+  }
+}
+
+/* Hover glitch burst — desktop only, no-op on touch */
+@media (hover: hover) {
+  .line {
+    cursor: default;
+  }
+
+  .line:hover::before,
+  .line:hover::after {
+    animation: glitchBurst 0.3s steps(2) infinite;
+  }
+
+  @keyframes glitchBurst {
+    0% {
+      transform: translate(3px, 2px);
+    }
+    25% {
+      transform: translate(-4px, -1px);
+    }
+    50% {
+      transform: translate(2px, -3px);
+    }
+    75% {
+      transform: translate(-3px, 3px);
+    }
+    100% {
+      transform: translate(4px, -2px);
+    }
+  }
+}
+
+/* ── Rotating word ───────────────────────────────────────────────────── */
 
 .wordAccent {
-  display: inline;
+  display: inline-block;
   color: var(--orange);
   transition: opacity 0.2s ease, transform 0.25s var(--ease-snap);
 }
 
 .wordIn {
   opacity: 1;
-}
-
-.wordIn .letter {
   transform: translateY(0);
 }
 
 .wordOut {
   opacity: 0;
-}
-
-.wordOut .letter {
   transform: translateY(10px);
 }
+
+/* ── Meta ─────────────────────────────────────────────────────────────── */
 
 .meta {
   margin-top: var(--sp-5);
@@ -67,6 +147,14 @@
   justify-content: space-between;
   gap: var(--sp-4);
   flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease 0.55s, transform 0.6s var(--ease-snap) 0.55s;
+}
+
+.meta.entered {
+  opacity: 1;
+  transform: none;
 }
 
 .sub {
@@ -74,6 +162,8 @@
   font-size: 17px;
   color: var(--ink);
 }
+
+/* ── Stamp ────────────────────────────────────────────────────────────── */
 
 .stamp {
   position: relative;
@@ -117,15 +207,26 @@
   }
 }
 
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+
 @media (prefers-reduced-motion: reduce) {
   .ring {
     animation: none;
   }
-  .letter {
-    transition: none !important;
-    transform: none !important;
+  .line,
+  .eyebrow,
+  .meta {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .title.entered .line::before,
+  .title.entered .line::after {
+    animation: none;
   }
 }
+
+/* ── Mobile ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 520px) {
   .meta {
