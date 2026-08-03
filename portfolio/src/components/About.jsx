@@ -1,5 +1,6 @@
 import { useReveal } from '../hooks/useReveal';
 import s from './About.module.css';
+import portraitImg from '../assets/images/potrait.jpg';
 
 const TAGS = [
   'Adobe Illustrator',
@@ -15,20 +16,18 @@ export default function About() {
 
   return (
     <section ref={ref} className={`${s.section} ${visible ? s.visible : ''}`} id="about">
-      <div className={s.portrait} aria-hidden="true">
-        <span>SD</span>
+      <div className={s.portrait}>
+        <img src={portraitImg} alt="Muhammed Savaad" className={s.portraitImage} />
       </div>
 
       <div className={s.copy}>
         <h2>About</h2>
         <p>
-          I create visual designs that feel sharp, modern, and easy to understand. My work
-          brings together brand identity, UI layouts, posters, social media creatives, and
-          typography-led compositions for digital and print use.
+          I specialize in creating bold visual identities, intuitive UI/UX designs, and striking typography systems.
+          My focus is on bringing creative ideas to life using industry-standard design tools like Figma, Illustrator, Photoshop, and After Effects.
         </p>
         <p>
-          I like building designs with strong hierarchy, balanced spacing, clean contrast,
-          and a clear purpose, so every piece looks good and communicates the right message.
+          Crafting digital interfaces, brand identity systems, poster graphics, and motion visuals that stand out with clarity, contrast, and high hierarchy.
         </p>
 
         <ul className={s.tags}>

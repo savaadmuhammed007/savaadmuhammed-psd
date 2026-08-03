@@ -13,9 +13,9 @@ const EXPERIENCES = [
     company: 'Life Science Academy',
   },
   // {
-  //   period: 'Ongoing',
-  //   title: 'Creative Tools & Production',
-  //   company: 'Personal Design Practice',
+  //   period: 'May 2024 - April 2025',
+  //   title: 'Media Convenor',
+  //   company: 'Markaz Ali Gate, Calicut',
   // },
 ];
 

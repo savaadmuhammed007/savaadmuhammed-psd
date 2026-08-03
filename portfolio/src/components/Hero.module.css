@@ -23,25 +23,40 @@
   line-height: 0.98;
   text-transform: uppercase;
   letter-spacing: -0.01em;
+  cursor: default;
+  user-select: none;
 }
 
 .line {
   display: block;
 }
 
-.wordAccent {
+/* Each letter is its own inline-block so transforms work independently */
+.letter {
   display: inline-block;
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease;
+}
+
+.wordAccent {
+  display: inline;
   color: var(--orange);
   transition: opacity 0.2s ease, transform 0.25s var(--ease-snap);
 }
 
 .wordIn {
   opacity: 1;
+}
+
+.wordIn .letter {
   transform: translateY(0);
 }
 
 .wordOut {
   opacity: 0;
+}
+
+.wordOut .letter {
   transform: translateY(10px);
 }
 
@@ -105,6 +120,10 @@
 @media (prefers-reduced-motion: reduce) {
   .ring {
     animation: none;
+  }
+  .letter {
+    transition: none !important;
+    transform: none !important;
   }
 }
 
