@@ -2,8 +2,8 @@ import { useState } from 'react';
 import s from './Nav.module.css';
 
 const LINKS = [
-  { href: '#work', label: 'Work' },
   { href: '#about', label: 'About' },
+  { href: '#work', label: 'Work' },
   { href: '#experience', label: 'Experience' },
 ];
 
