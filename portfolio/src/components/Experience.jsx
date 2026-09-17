@@ -12,11 +12,11 @@ const EXPERIENCES = [
     title: 'Graphic Designer',
     company: 'Life Science Academy',
   },
-  // {
-  //   period: 'May 2024 - April 2025',
-  //   title: 'Media Convenor',
-  //   company: 'Markaz Ali Gate, Calicut',
-  // },
+  {
+    period: '2024 - Present',
+    title: 'Freelance Graphic Designer',
+    company: 'Self Employed',
+  },
 ];
 
 export default function Experience() {
