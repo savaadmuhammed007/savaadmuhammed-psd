@@ -1,0 +1,214 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-3);
+  animation: fadeIn 0.2s var(--ease-snap) both;
+}
+
+.container {
+  background: var(--paper);
+  border: var(--bw-lg) solid var(--ink);
+  box-shadow: 10px 10px 0 var(--ink);
+  max-width: 90vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  animation: scaleIn 0.25s var(--ease-snap) both;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--paper-2);
+  border-bottom: var(--bw) solid var(--ink);
+  gap: 16px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.closeBtn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--paper);
+  border: var(--bw) solid var(--ink);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.closeBtn:hover {
+  background: var(--orange);
+  color: var(--ink);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.mediaWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d0d;
+  flex: 1;
+  min-height: 250px;
+  max-height: calc(92vh - 120px);
+  overflow: hidden;
+}
+
+.mediaImage {
+  max-width: 100%;
+  max-height: calc(92vh - 120px);
+  object-fit: contain;
+  display: block;
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--bw) solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 800;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s ease, background 0.15s ease;
+  z-index: 10;
+}
+
+.prevBtn {
+  left: 16px;
+}
+
+.nextBtn {
+  right: 16px;
+}
+
+.navBtn:hover {
+  background: var(--blue);
+  color: #fff;
+  transform: translateY(-50%) translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.bottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--paper-2);
+  border-top: var(--bw) solid var(--ink);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.bottomLeft {
+  flex: 1;
+}
+
+.description {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--grey);
+  margin: 0;
+}
+
+.externalBtn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--orange);
+  color: var(--ink);
+  border: var(--bw) solid var(--ink);
+  padding: 8px 16px;
+  box-shadow: 4px 4px 0 var(--ink);
+  text-transform: uppercase;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.externalBtn:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--ink);
+  background: #ff7024;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .topBar,
+  .bottomBar {
+    padding: 8px 12px;
+  }
+  .navBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
