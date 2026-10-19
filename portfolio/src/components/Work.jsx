@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { projects, socialMediaProjects, magazineProjects, flyerProjects } from '../data/projects';
-import { useReveal } from '../hooks/useReveal';
 import Card from './Card';
 import Lightbox from './Lightbox';
 import s from './Work.module.css';
 
 export default function Work() {
-  const [ref, visible] = useReveal();
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedLightboxIndex, setSelectedLightboxIndex] = useState(null);
 
@@ -46,7 +44,7 @@ export default function Work() {
   const showFlyers = activeFilter === 'all' || activeFilter === 'flyers';
 
   return (
-    <section ref={ref} className={`${s.section} ${visible ? s.visible : ''}`} id="work">
+    <section className={s.section} id="work">
       {/* Header with Title and Filter Tabs */}
       <div className={s.head}>
         <div className={s.titleGroup}>

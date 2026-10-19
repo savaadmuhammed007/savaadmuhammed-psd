@@ -3,15 +3,6 @@
   margin: 0 auto;
   padding: var(--sp-6) var(--sp-3);
   border-bottom: var(--bw) solid var(--ink);
-
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.5s var(--ease-snap), transform 0.5s var(--ease-snap);
-}
-
-.section.visible {
-  opacity: 1;
-  transform: none;
 }
 
 /* Header & Filter Controls */
@@ -209,6 +200,12 @@
 .gridItem:hover .image {
   transform: scale(1.05);
   filter: grayscale(0%);
+}
+
+@media (hover: none) {
+  .image {
+    filter: grayscale(0%);
+  }
 }
 
 .placeholderBlock {
