@@ -6,6 +6,7 @@ import s from './Work.module.css';
 
 export default function Work() {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [lightboxList, setLightboxList] = useState([]);
   const [selectedLightboxIndex, setSelectedLightboxIndex] = useState(null);
 
   const totalCount = projects.length;
@@ -13,30 +14,30 @@ export default function Work() {
   const magazineCount = magazineProjects.length;
   const flyerCount = flyerProjects.length;
 
-  const currentProjects =
-    activeFilter === 'social'
-      ? socialMediaProjects
-      : activeFilter === 'magazine'
-      ? magazineProjects
-      : activeFilter === 'flyers'
-      ? flyerProjects
-      : projects;
-
   const handleOpenLightbox = (project) => {
-    const idx = currentProjects.findIndex((p) => p.id === project.id);
+    // Scope navigation strictly to the item's own category
+    const list =
+      project.category === 'flyer' || project.category === 'flyers'
+        ? flyerProjects
+        : project.category === 'magazine'
+        ? magazineProjects
+        : socialMediaProjects;
+
+    const idx = list.findIndex((p) => p.id === project.id);
     if (idx !== -1) {
+      setLightboxList(list);
       setSelectedLightboxIndex(idx);
     }
   };
 
   const handlePrevLightbox = () => {
-    if (selectedLightboxIndex === null) return;
-    setSelectedLightboxIndex((prev) => (prev > 0 ? prev - 1 : currentProjects.length - 1));
+    if (selectedLightboxIndex === null || lightboxList.length === 0) return;
+    setSelectedLightboxIndex((prev) => (prev > 0 ? prev - 1 : lightboxList.length - 1));
   };
 
   const handleNextLightbox = () => {
-    if (selectedLightboxIndex === null) return;
-    setSelectedLightboxIndex((prev) => (prev < currentProjects.length - 1 ? prev + 1 : 0));
+    if (selectedLightboxIndex === null || lightboxList.length === 0) return;
+    setSelectedLightboxIndex((prev) => (prev < lightboxList.length - 1 ? prev + 1 : 0));
   };
 
   const showSocial = activeFilter === 'all' || activeFilter === 'social';
@@ -159,12 +160,15 @@ export default function Work() {
       )}
 
       {/* Lightbox for full-size inspection */}
-      {selectedLightboxIndex !== null && (
+      {selectedLightboxIndex !== null && lightboxList[selectedLightboxIndex] && (
         <Lightbox
-          item={currentProjects[selectedLightboxIndex]}
-          onClose={() => setSelectedLightboxIndex(null)}
-          onPrev={handlePrevLightbox}
-          onNext={handleNextLightbox}
+          item={lightboxList[selectedLightboxIndex]}
+          onClose={() => {
+            setSelectedLightboxIndex(null);
+            setLightboxList([]);
+          }}
+          onPrev={lightboxList.length > 1 ? handlePrevLightbox : null}
+          onNext={lightboxList.length > 1 ? handleNextLightbox : null}
         />
       )}
     </section>
