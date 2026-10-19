@@ -83,6 +83,20 @@ const PROJECT_META = {
     categoryLabel: 'Social Media Poster',
     tag: 'Travel & Tourism',
   },
+  'rajasthan package': {
+    title: 'Rajasthan Desert Tour Package',
+    category: 'social',
+    categoryLabel: 'Social Media Poster',
+    tag: 'Travel & Tourism',
+    color: 'var(--orange)',
+  },
+  'manali package': {
+    title: 'Manali Tour Package',
+    category: 'social',
+    categoryLabel: 'Social Media Poster',
+    tag: 'Travel & Tourism',
+    color: 'var(--blue)',
+  },
   'webinar': {
     title: 'Live Webinar Masterclass',
     category: 'social',
@@ -100,6 +114,42 @@ const PROJECT_META = {
     category: 'social',
     categoryLabel: 'Social Media Poster',
     tag: 'Festive Creative',
+  },
+  'flyer1': {
+    title: 'Nuvana Worldwide Travel & Cargo A5 Flyer',
+    category: 'flyer',
+    categoryLabel: 'Flyers & Print Works',
+    tag: 'A5 Print Flyer',
+    description: 'Double-sided A5 print campaign for Nuvana.go & Nuvana.ex — Travel services & Grand Opening ceremony',
+    images: [
+      { url: '/images/flyer/Flyer-Front.jpg', title: 'Side 1: Worldwide Travel & Cargo' },
+      { url: '/images/flyer/Flyer-Back.jpg', title: 'Side 2: Grand Opening Ceremony' },
+    ],
+    color: 'var(--blue)',
+  },
+  'flyer2': {
+    title: 'Nuvana Door-to-Door Cargo & Travel A5 Flyer',
+    category: 'flyer',
+    categoryLabel: 'Flyers & Print Works',
+    tag: 'A5 Print Flyer',
+    description: 'Double-sided A5 print campaign for Nuvana.ex Door-to-Door Cargo & Nuvana.go One-Stop Travel Solutions',
+    images: [
+      { url: '/images/flyer/Flyer2-Front.jpg', title: 'Side 1: Door-to-Door Cargo (150+ Countries)' },
+      { url: '/images/flyer/Flyer2-Back.jpg', title: 'Side 2: Discount Tickets & Travel Services' },
+    ],
+    color: 'var(--orange)',
+  },
+  'flyer': {
+    title: 'Nuvana Worldwide Travel & Cargo A5 Flyer',
+    category: 'flyer',
+    categoryLabel: 'Flyers & Print Works',
+    tag: 'A5 Print Flyer',
+    description: 'Double-sided A5 print campaign for Nuvana.go & Nuvana.ex',
+    images: [
+      { url: '/images/flyer/Flyer-Front.jpg', title: 'Side 1: Front' },
+      { url: '/images/flyer/Flyer-Back.jpg', title: 'Side 2: Back' },
+    ],
+    color: 'var(--blue)',
   },
 };
 
@@ -119,8 +169,20 @@ export const projects = Object.entries(publicModules)
       cleanKey.includes('jalakam') ||
       cleanKey.includes('book');
 
-    const category = meta.category || (isMagazine ? 'magazine' : 'social');
-    const categoryLabel = meta.categoryLabel || (category === 'magazine' ? 'Magazine Work' : 'Social Media Poster');
+    const isFlyer =
+      meta.category === 'flyer' ||
+      meta.category === 'flyers' ||
+      cleanKey.includes('flyer') ||
+      cleanKey.includes('print');
+
+    const category = meta.category || (isFlyer ? 'flyer' : isMagazine ? 'magazine' : 'social');
+    const categoryLabel =
+      meta.categoryLabel ||
+      (category === 'flyer'
+        ? 'Flyers & Print Works'
+        : category === 'magazine'
+        ? 'Magazine Work'
+        : 'Social Media Poster');
     const title = meta.title || rawFilename;
 
     return {
@@ -129,9 +191,21 @@ export const projects = Object.entries(publicModules)
       title,
       category,
       categoryLabel,
-      tag: meta.tag || (category === 'magazine' ? 'Editorial / Magazine' : 'Social Media Poster'),
-      badge: meta.badge || (category === 'magazine' ? 'Flipbook' : 'Poster'),
+      tag:
+        meta.tag ||
+        (category === 'flyer'
+          ? 'A5 Flyer (2 Sides)'
+          : category === 'magazine'
+          ? 'Editorial / Magazine'
+          : 'Social Media Poster'),
+      badge: meta.badge || null,
+      badgeText:
+        meta.badgeText ||
+        (category === 'magazine'
+          ? 'READ FLIPBOOK ↗'
+          : null),
       description: meta.description || '',
+      images: meta.images || null,
       link: meta.link || null,
       linkText: meta.linkText || (meta.link ? 'View Online ↗' : null),
       color: meta.color || colors[index % colors.length],
@@ -141,3 +215,4 @@ export const projects = Object.entries(publicModules)
 
 export const socialMediaProjects = projects.filter((p) => p.category === 'social');
 export const magazineProjects = projects.filter((p) => p.category === 'magazine');
+export const flyerProjects = projects.filter((p) => p.category === 'flyer' || p.category === 'flyers');

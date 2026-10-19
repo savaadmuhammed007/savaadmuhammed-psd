@@ -159,6 +159,12 @@
   gap: var(--sp-4);
 }
 
+.flyerGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+}
+
 /* Clean Poster / Magazine Card Item */
 .gridItem {
   position: relative;
@@ -239,7 +245,8 @@
 /* Responsive Styles */
 @media (max-width: 760px) {
   .grid,
-  .magazineGrid {
+  .magazineGrid,
+  .flyerGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--sp-3);
   }
@@ -264,7 +271,8 @@
 
 @media (max-width: 520px) {
   .grid,
-  .magazineGrid {
+  .magazineGrid,
+  .flyerGrid {
     grid-template-columns: 1fr;
   }
 

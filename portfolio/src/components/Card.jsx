@@ -13,19 +13,29 @@ export default function Card({ project, onSelectImage }) {
     }
   };
 
+  const getAriaLabel = () => {
+    if (project.category === 'flyer' || project.category === 'flyers') {
+      return `${project.title || 'Flyer & Print Work'} - View flyer designs`;
+    }
+    if (project.category === 'magazine') {
+      return `${project.title || 'Magazine Work'} - View interactive flipbook (opens in new tab)`;
+    }
+    return project.title || 'Creative artwork';
+  };
+
   const CardTag = isLink ? 'a' : 'article';
   const customProps = isLink
     ? {
         href: project.link,
         target: '_blank',
         rel: 'noopener noreferrer',
-        'aria-label': `${project.title || 'Magazine Work'} - View interactive flipbook (opens in new tab)`,
+        'aria-label': getAriaLabel(),
       }
     : {
         onClick: handleClick,
         role: onSelectImage ? 'button' : undefined,
         tabIndex: onSelectImage ? 0 : undefined,
-        'aria-label': project.title || 'Creative artwork',
+        'aria-label': getAriaLabel(),
         onKeyDown: (e) => {
           if ((e.key === 'Enter' || e.key === ' ') && onSelectImage) {
             e.preventDefault();
@@ -52,10 +62,10 @@ export default function Card({ project, onSelectImage }) {
         <div className={s.placeholderBlock} />
       )}
 
-      {/* Floating badge for magazine flipbook link */}
+      {/* Floating badge for external flipbook link */}
       {isLink && (
         <div className={s.magazineBadge}>
-          <span>READ FLIPBOOK ↗</span>
+          <span>{project.badgeText || 'READ FLIPBOOK ↗'}</span>
         </div>
       )}
     </CardTag>

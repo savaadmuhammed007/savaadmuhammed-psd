@@ -24,7 +24,7 @@ export default function About() {
         <h2>About</h2>
         <p>
           I specialize in creating bold visual identities, intuitive UI/UX designs, and striking typography systems.
-          My focus is on bringing creative ideas to life using industry-standard design tools like Figma, Illustrator, Photoshop, and After Effects.
+          My focus is on bringing creative ideas to life using industry-standard design tools like Photoshop, Illustrator, InDesign, and After Effects.
         </p>
         <p>
           Crafting digital interfaces, brand identity systems, poster graphics, and motion visuals that stand out with clarity, contrast, and high hierarchy.

@@ -1,13 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import s from './Lightbox.module.css';
 
 export default function Lightbox({ item, onClose, onPrev, onNext }) {
+  const hasMultipleImages = Boolean(item?.images && item.images.length > 1);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  // Reset flip state when switching artwork
+  useEffect(() => {
+    setIsFlipped(false);
+  }, [item]);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if ((e.key === ' ' || e.key === 'Enter') && hasMultipleImages) {
+        e.preventDefault();
+        setIsFlipped((prev) => !prev);
+        return;
+      }
       if (e.key === 'ArrowLeft' && onPrev) onPrev();
       if (e.key === 'ArrowRight' && onNext) onNext();
     };
+
     window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
 
@@ -15,7 +32,7 @@ export default function Lightbox({ item, onClose, onPrev, onNext }) {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [onClose, onPrev, onNext]);
+  }, [onClose, onPrev, onNext, hasMultipleImages]);
 
   if (!item) return null;
 
@@ -27,62 +44,109 @@ export default function Lightbox({ item, onClose, onPrev, onNext }) {
       aria-modal="true"
       aria-label="Artwork Preview"
     >
-      <div className={s.container} onClick={(e) => e.stopPropagation()}>
-        {/* Header bar */}
-        <div className={s.topBar}>
-          <span className={s.badge}>PREVIEW</span>
-          <button
-            type="button"
-            className={s.closeBtn}
-            onClick={onClose}
-            aria-label="Close preview"
-          >
-            ✕ [ESC]
-          </button>
-        </div>
+      {/* Floating minimal close button */}
+      <button
+        type="button"
+        className={s.closeBtn}
+        onClick={onClose}
+        aria-label="Close preview"
+      >
+        ✕
+      </button>
 
-        {/* Image preview */}
-        <div className={s.mediaWrapper}>
-          <img
-            src={item.image}
-            alt="Artwork preview"
-            className={s.mediaImage}
-          />
+      {/* Navigation arrows */}
+      {onPrev && (
+        <button
+          type="button"
+          className={`${s.navBtn} ${s.prevBtn}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrev();
+          }}
+          aria-label="Previous artwork"
+        >
+          ‹
+        </button>
+      )}
 
-          {onPrev && (
+      {onNext && (
+        <button
+          type="button"
+          className={`${s.navBtn} ${s.nextBtn}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          aria-label="Next artwork"
+        >
+          ›
+        </button>
+      )}
+
+      {/* Main viewer content (click propagation stopped so clicking background closes) */}
+      <div className={s.viewContent} onClick={(e) => e.stopPropagation()}>
+        {hasMultipleImages ? (
+          <div className={s.flipWrapper}>
+            <div
+              className={`${s.flipCard} ${isFlipped ? s.isFlipped : ''}`}
+              onClick={() => setIsFlipped((prev) => !prev)}
+              role="button"
+              tabIndex={0}
+              aria-label={`Double-sided flyer. Currently viewing ${isFlipped ? 'Side 2' : 'Side 1'}. Tap to flip.`}
+              onKeyDown={(e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                  e.preventDefault();
+                  setIsFlipped((prev) => !prev);
+                }
+              }}
+            >
+              {/* Front Face (Side 1) */}
+              <div className={s.cardFaceFront}>
+                <img
+                  src={item.images[0].url}
+                  alt={item.images[0].title || 'Flyer Front'}
+                  className={s.flyerImg}
+                />
+              </div>
+
+              {/* Back Face (Side 2) */}
+              <div className={s.cardFaceBack}>
+                <img
+                  src={item.images[1].url}
+                  alt={item.images[1].title || 'Flyer Back'}
+                  className={s.flyerImg}
+                />
+              </div>
+            </div>
+
+            {/* Clean minimal flip indicator pill */}
             <button
               type="button"
-              className={`${s.navBtn} ${s.prevBtn}`}
-              onClick={onPrev}
-              aria-label="Previous artwork"
+              className={s.flipPill}
+              onClick={() => setIsFlipped((prev) => !prev)}
+              aria-label="Flip between side 1 and side 2"
             >
-              &larr;
+              <span className={s.flipIcon}>↻</span>
+              <span>{isFlipped ? 'Side 2 of 2' : 'Side 1 of 2'} &bull; Tap to flip</span>
             </button>
-          )}
-
-          {onNext && (
-            <button
-              type="button"
-              className={`${s.navBtn} ${s.nextBtn}`}
-              onClick={onNext}
-              aria-label="Next artwork"
-            >
-              &rarr;
-            </button>
-          )}
-        </div>
-
-        {/* Footer if external link exists */}
-        {item.link && (
-          <div className={s.bottomBar}>
-            <a
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={s.externalBtn}
-            >
-              Open Flipbook ↗
-            </a>
+          </div>
+        ) : (
+          <div className={s.singleWrapper}>
+            <img
+              src={item.image}
+              alt={item.title || 'Artwork preview'}
+              className={s.singleImg}
+            />
+            {item.link && (
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.linkPill}
+              >
+                {item.linkText || 'Open Flipbook ↗'}
+              </a>
+            )}
           </div>
         )}
       </div>

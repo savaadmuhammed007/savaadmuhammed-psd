@@ -1,0 +1,6 @@
+# Large print media assets
+*.pdf
+
+# System files
+.DS_Store
+Thumbs.db

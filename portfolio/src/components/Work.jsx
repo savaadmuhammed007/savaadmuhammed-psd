@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { projects, socialMediaProjects, magazineProjects } from '../data/projects';
+import { projects, socialMediaProjects, magazineProjects, flyerProjects } from '../data/projects';
 import { useReveal } from '../hooks/useReveal';
 import Card from './Card';
 import Lightbox from './Lightbox';
@@ -13,12 +13,15 @@ export default function Work() {
   const totalCount = projects.length;
   const socialCount = socialMediaProjects.length;
   const magazineCount = magazineProjects.length;
+  const flyerCount = flyerProjects.length;
 
   const currentProjects =
     activeFilter === 'social'
       ? socialMediaProjects
       : activeFilter === 'magazine'
       ? magazineProjects
+      : activeFilter === 'flyers'
+      ? flyerProjects
       : projects;
 
   const handleOpenLightbox = (project) => {
@@ -40,6 +43,7 @@ export default function Work() {
 
   const showSocial = activeFilter === 'all' || activeFilter === 'social';
   const showMagazine = activeFilter === 'all' || activeFilter === 'magazine';
+  const showFlyers = activeFilter === 'all' || activeFilter === 'flyers';
 
   return (
     <section ref={ref} className={`${s.section} ${visible ? s.visible : ''}`} id="work">
@@ -78,6 +82,15 @@ export default function Work() {
             aria-selected={activeFilter === 'magazine'}
           >
             Magazine Work <span className={s.filterCount}>{magazineCount}</span>
+          </button>
+          <button
+            type="button"
+            className={`${s.filterBtn} ${activeFilter === 'flyers' ? s.filterActive : ''}`}
+            onClick={() => setActiveFilter('flyers')}
+            role="tab"
+            aria-selected={activeFilter === 'flyers'}
+          >
+            Flyers & Print Works <span className={s.filterCount}>{flyerCount}</span>
           </button>
         </div>
       </div>
@@ -119,6 +132,28 @@ export default function Work() {
               <Card
                 key={project.id}
                 project={project}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* SECTION 3: Flyers & Print Works */}
+      {showFlyers && (
+        <div className={`${s.categorySection} ${s.flyerCategorySection}`}>
+          <div className={s.categoryHead}>
+            <div className={s.categoryTitleWrap}>
+              <span className={s.categoryNum}>03</span>
+              <h3 className={s.categoryTitle}>Flyers & Print Works</h3>
+            </div>
+          </div>
+
+          <div className={s.flyerGrid}>
+            {flyerProjects.map((project) => (
+              <Card
+                key={project.id}
+                project={project}
+                onSelectImage={handleOpenLightbox}
               />
             ))}
           </div>
