@@ -34,12 +34,15 @@
 .email {
   display: inline-block;
   font-family: var(--font-display);
-  font-size: clamp(24px, 5vw, 40px);
+  font-size: clamp(16px, 4.5vw, 40px);
   text-transform: lowercase;
   border-bottom: var(--bw) solid var(--ink);
   padding-bottom: 4px;
   margin-bottom: var(--sp-5);
   transition: color 0.15s;
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .email:hover {

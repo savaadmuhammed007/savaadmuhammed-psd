@@ -1,14 +1,21 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 12, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  width: 100vw;
+  max-width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(10, 10, 12, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* Prevents any 3D rotation or layout overflow to the left or right */
   padding: 16px;
+  box-sizing: border-box;
+  touch-action: none; /* Prevents rubber-banding/pull-to-refresh during modal view */
   animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -83,11 +90,16 @@
 
 .viewContent {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 94vw;
-  max-height: 94vh;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
   position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
   animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -97,8 +109,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  perspective: 1400px;
+  perspective: 1200px;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .flipCard {
@@ -110,7 +125,9 @@
   cursor: pointer;
   user-select: none;
   border-radius: 8px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
 }
 
 .flipCard.isFlipped {
@@ -140,8 +157,8 @@
 
 .flyerImg {
   display: block;
-  max-height: calc(85vh - 65px);
-  max-width: min(88vw, 620px);
+  max-height: calc(82dvh - 65px);
+  max-width: min(calc(100vw - 32px), 600px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -154,7 +171,7 @@
 }
 
 .flipPill {
-  margin-top: 16px;
+  margin-top: 14px;
   background: rgba(26, 26, 30, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -171,8 +188,9 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   user-select: none;
+  z-index: 10;
 }
 
 .flipPill:hover {
@@ -199,21 +217,24 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .singleImg {
   display: block;
-  max-height: calc(90vh - 40px);
-  max-width: 90vw;
+  max-height: calc(86dvh - 40px);
+  max-width: min(calc(100vw - 32px), 640px);
   width: auto;
   height: auto;
   object-fit: contain;
   border-radius: 8px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .linkPill {
-  margin-top: 16px;
+  margin-top: 14px;
   background: var(--orange);
   color: var(--ink);
   border: var(--bw) solid var(--ink);
@@ -229,6 +250,7 @@
   gap: 6px;
   text-decoration: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+  z-index: 10;
 }
 
 .linkPill:hover {
@@ -256,36 +278,57 @@
   }
 }
 
-@media (max-width: 768px) {
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 10px;
+  }
+
   .closeBtn {
-    top: 14px;
-    right: 14px;
+    top: 12px;
+    right: 12px;
     width: 38px;
     height: 38px;
     font-size: 16px;
   }
+
+  /* Move prev/next buttons to bottom corners so they never cover artwork on mobile */
   .navBtn {
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
+    top: auto;
+    bottom: 14px;
+    transform: none;
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+    background: rgba(26, 26, 30, 0.9);
   }
+
+  .navBtn:hover {
+    transform: scale(1.05);
+  }
+
   .prevBtn {
-    left: 10px;
+    left: 12px;
   }
+
   .nextBtn {
-    right: 10px;
+    right: 12px;
   }
-  .flyerImg {
-    max-height: calc(80vh - 60px);
-    max-width: 92vw;
-  }
-  .singleImg {
-    max-height: calc(84vh - 40px);
-    max-width: 92vw;
-  }
+
   .flipPill {
     font-size: 11px;
     padding: 6px 14px;
-    margin-top: 12px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+
+  .flyerImg {
+    max-height: calc(75dvh - 50px);
+    max-width: calc(100vw - 24px);
+  }
+
+  .singleImg {
+    max-height: calc(80dvh - 40px);
+    max-width: calc(100vw - 24px);
   }
 }

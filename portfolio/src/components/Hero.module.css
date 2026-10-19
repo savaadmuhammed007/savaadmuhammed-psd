@@ -228,9 +228,36 @@
 
 /* ── Mobile ──────────────────────────────────────────────────────────── */
 
+@media (max-width: 760px) {
+  .hero {
+    padding: var(--sp-4) var(--sp-2) var(--sp-4);
+  }
+
+  .title {
+    font-size: clamp(32px, 9vw, 56px);
+    line-height: 1.05;
+  }
+
+  .sub {
+    font-size: 15px;
+  }
+}
+
 @media (max-width: 520px) {
   .meta {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--sp-3);
+  }
+
+  .stamp {
+    width: 90px;
+    height: 90px;
+  }
+
+  .center {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
   }
 }

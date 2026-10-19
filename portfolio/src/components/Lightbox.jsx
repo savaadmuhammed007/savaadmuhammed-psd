@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import s from './Lightbox.module.css';
 
 export default function Lightbox({ item, onClose, onPrev, onNext }) {
   const hasMultipleImages = Boolean(item?.images && item.images.length > 1);
   const [isFlipped, setIsFlipped] = useState(false);
+
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
 
   // Reset flip state when switching artwork
   useEffect(() => {
@@ -26,13 +29,42 @@ export default function Lightbox({ item, onClose, onPrev, onNext }) {
     };
 
     window.addEventListener('keydown', handleKeyDown);
+
+    // Prevent background scrolling cleanly without causing shifts or horizontal jumps
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
     };
   }, [onClose, onPrev, onNext, hasMultipleImages]);
+
+  // Mobile swipe navigation handler
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+
+    // Detect intentional horizontal swipe (>40px and more horizontal than vertical)
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX < 0 && onNext) {
+        onNext(); // swipe left -> next artwork
+      } else if (deltaX > 0 && onPrev) {
+        onPrev(); // swipe right -> previous artwork
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   if (!item) return null;
 
@@ -40,6 +72,8 @@ export default function Lightbox({ item, onClose, onPrev, onNext }) {
     <div
       className={s.backdrop}
       onClick={onClose}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       role="dialog"
       aria-modal="true"
       aria-label="Artwork Preview"
